@@ -1,0 +1,42 @@
+{
+  "chart": {
+    "title": "Number of people that cannot afford a calorie sufficient diet",
+    "subtitle": "The cost of an energy sufficient diet is the cheapest way that an individual can meet their calorie requirement using available staple foods in each country.  A diet is defined as unaffordable when its cost, plus basic non-food needs like housing and transportation, exceeds daily income.",
+    "citation": "FAO and World Bank (2025), using data and methods from Herforth et al. (2022)",
+    "originalChartUrl": "https://ourworldindata.org/grapher/number-calorie-diet-unaffordable?v=1&csvType=full&useColumnShortNames=false",
+    "selection": [
+      "World",
+      "India",
+      "China",
+      "Brazil",
+      "Niger",
+      "Nigeria"
+    ]
+  },
+  "columns": {
+    "Number of people who cannot afford sufficient calories": {
+      "titleShort": "Number of people who cannot afford sufficient calories",
+      "titleLong": "Number of people who cannot afford sufficient calories",
+      "descriptionShort": "Total number of people who cannot afford an energy-sufficient diet.",
+      "descriptionKey": [
+        "An energy sufficient diet provides enough of a starchy staple food for day-to-day subsistence, without either nutrient adequacy or adherence to dietary guidelines.",
+        "This indicator is calculated as the percentage of a country's population that is unable to afford an energy sufficient diet, multiplied by the country's population.",
+        "Population counts all residents regardless of legal status or citizenship.",
+        "A value of zero indicates a null or a small number rounded down at the current precision level."
+      ],
+      "shortUnit": "",
+      "unit": "people",
+      "timespan": "2021-2021",
+      "type": "Integer",
+      "owidVariableId": 1108551,
+      "shortName": "people_who_cannot_afford_sufficient_calories",
+      "lastUpdated": "2025-08-04",
+      "nextUpdate": "2026-08-04",
+      "citationShort": "FAO and World Bank (2025), using data and methods from Herforth et al. (2022) – with minor processing by Our World in Data",
+      "citationLong": "FAO and World Bank (2025), using data and methods from Herforth et al. (2022) – with minor processing by Our World in Data. “Number of people who cannot afford sufficient calories” [dataset]. Herforth et al. (2022), adapted by World Bank, “Food Prices for Nutrition 4.0” [original data].",
+      "fullMetadata": "https://api.ourworldindata.org/v1/indicators/1108551.metadata.json"
+    }
+  },
+  "dateDownloaded": "2025-11-05",
+  "activeFilters": {}
+}
