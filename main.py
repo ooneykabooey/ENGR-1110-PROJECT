@@ -29,11 +29,11 @@ def wrap_text(text, width):
 
 ##### DATA
 
-ncdu = pd.read_csv('number-calorie-diet-unaffordable.csv', delimiter=',')
+ncdu = pd.read_csv('contents/number-calorie-diet-unaffordable.csv', delimiter=',')
 
 ncdu = ncdu[ncdu['Code'].str.len() == 3].copy()
 
-with open('number-calorie-diet-unaffordable.metadata.json', 'r') as f:
+with open('contents/number-calorie-diet-unaffordable.metadata.json', 'r') as f:
     metadata = json.load(f)
 
 # Take the mappings from the .json and list them as variables
@@ -75,7 +75,9 @@ fig.update_layout(
         'x': 0.5,
         'xanchor': 'center',
         'yanchor': 'top'
-    }
+    },
+    width=1200,
+    height=700
 )
 
 # Annotation citing source and any disclaimer about the data
