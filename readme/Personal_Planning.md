@@ -14,13 +14,13 @@ This document serves as a planning basis for me, Levi Daniel.
 
 ##### Causers
 - Lack of education
-- Unemployment/Underemployment
+- Unemployment/Underemployment (DONE)
 - Economic Inequality
 - High Cost of Living
 - Discrimination (Historical/Systemic)
 - Political Instability/Corruption
 - Climate Change/Natural Disaster
-- Health Issues
+- Health Issues (DONE)
 
 #### Impacts
 Gov't policies, etc.
