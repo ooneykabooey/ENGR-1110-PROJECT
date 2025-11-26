@@ -29,11 +29,13 @@ def wrap_text(text, width):
 
 ##### DATA
 
-ncdu = pd.read_csv('number-calorie-diet-unaffordable.csv', delimiter=',')
+ncdu = pd.read_csv(
+    '../../content/drive/MyDrive/COLAB/ENGR-1110-Project/Impacts/ncdu/number-calorie-diet-unaffordable.csv', delimiter=',')
 
 ncdu = ncdu[ncdu['Code'].str.len() == 3].copy()
 
-with open('number-calorie-diet-unaffordable.metadata.json', 'r') as f:
+with open(
+        '../../content/drive/MyDrive/COLAB/ENGR-1110-Project/Impacts/ncdu/number-calorie-diet-unaffordable.metadata.json', 'r') as f:
     metadata = json.load(f)
 
 # Take the mappings from the .json and list them as variables

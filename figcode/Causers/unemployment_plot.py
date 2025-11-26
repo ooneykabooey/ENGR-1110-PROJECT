@@ -19,11 +19,13 @@ import io
 import math
 
 # Load main WDI dataset (the one with 1960, 1961, ...)
-df = pd.read_csv("API_SL.UEM.TOTL.ZS_DS2_en_csv_v2_130165.csv", skiprows=4)
+df = pd.read_csv(
+    "../../content/drive/MyDrive/COLAB/ENGR-1110-Project/Causers/unemployment/API_SL.UEM.TOTL.ZS_DS2_en_csv_v2_130165.csv", skiprows=4)
 df.columns = df.columns.str.strip()  # remove any accidental whitespace
 
 # Load indicator info
-indicators = pd.read_csv("Metadata_Indicator_API_SL.UEM.TOTL.ZS_DS2_en_csv_v2_130165.csv")
+indicators = pd.read_csv(
+    "../../content/drive/MyDrive/COLAB/ENGR-1110-Project/Causers/unemployment/Metadata_Indicator_API_SL.UEM.TOTL.ZS_DS2_en_csv_v2_130165.csv")
 indicators.columns = indicators.columns.str.strip()
 
 # Filter to unemployment indicator
