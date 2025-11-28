@@ -1,28 +1,64 @@
-import csv
-
-# AUTHOR: Levi Daniel - lcd0063@auburn.edu
-
-### Libraries
-import matplotlib.pyplot as plt
-import matplotlib.image as mpimg
-import numpy as np
 import pandas as pd
 import plotly.express as px
-from dash import Dash, dcc, html
-import requests
-import json
-import textwrap
-
-## Python Stuff
-import random
-import re
-import io
-import math
-
 from IPython.display import HTML
 import uuid
 
+# -----------------------------
+# Load crime dataset
+# -----------------------------
+df = pd.read_csv("../../content/drive/MyDrive/COLAB/ENGR-1110-Project/Impacts/crime-rate/global_oc_index.csv")  # replace with your path
 
+# Columns to use for tabs
+crime_columns = [
+    "Criminality avg.",
+    "Criminal markets avg.",
+    "Human trafficking",
+    "Human smuggling",
+    "Extortion and protection racketeering",
+    "Arms trafficking",
+    "Trade in counterfeit goods",
+    "Illicit trade in excisable goods",
+    "Flora crimes",
+    "Fauna crimes",
+    "Non-renewable resource crimes",
+    "Heroin trade",
+    "Cocaine trade",
+    "Cannabis trade",
+    "Synthetic drug trade",
+    "Cyber-dependent crimes",
+    "Financial crimes",
+    "Criminal actors avg.",
+    "Mafia-style groups",
+    "Criminal networks",
+    "State-embedded actors",
+    "Foreign actors",
+    "Private sector actors",
+    "Resilience avg."
+]
+
+# Convert numeric columns
+for col in crime_columns:
+    df[col] = pd.to_numeric(df[col], errors="coerce")
+
+# -----------------------------
+# Create Plotly figures for each crime type
+# -----------------------------
+figs = {}
+for col in crime_columns:
+    fig = px.choropleth(
+        df,
+        locations="Country",
+        locationmode="country names",
+        color=col,
+        hover_name="Country",
+        color_continuous_scale="Reds",
+        title=f"Global {col}"
+    )
+    figs[col] = fig
+
+# -----------------------------
+# Function to create HTML tabs
+# -----------------------------
 def make_tabs(fig_dict):
     tab_id = str(uuid.uuid4()).replace('-', '')
 
@@ -36,7 +72,7 @@ def make_tabs(fig_dict):
 
         # Tab button
         tab_buttons += f"""
-            <button class="tablinks_{tab_id}" onclick="openTab_{tab_id}(event, 'tab_{i}_{tab_id}')">{title}</button>
+            <button class="tablinks_{tab_id}" onclick="openTab_{tab_id}(event, 'tab_{i}_{tab_id}')">{title[:20]}</button>
         """
 
         # Tab content
@@ -61,6 +97,7 @@ def make_tabs(fig_dict):
             padding: 10px 16px;
             transition: 0.3s;
             color: white;
+            margin-right: 2px;
         }}
         .tab_{tab_id} button:hover {{
             background-color: #666;
@@ -96,92 +133,7 @@ def make_tabs(fig_dict):
 
     return HTML(full_html)
 
-
-
-##### DATA (Abbreviated from the .csv files)
-
-ghi = pd.read_csv(
-    '../../content/drive/MyDrive/COLAB/ENGR-1110-Project/Causers/global-hunger-index/global-hunger-index.csv', delimiter=',')
-scu = pd.read_csv(
-    '../../content/drive/MyDrive/COLAB/ENGR-1110-Project/Causers/global-hunger-index/share-of-children-underweight.csv', delimiter=',', quotechar='"', engine='python')
-scwlh = pd.read_csv(
-    '../../content/drive/MyDrive/COLAB/ENGR-1110-Project/Causers/global-hunger-index/share-of-children-with-a-weight-too-low-for-their-height-wasting.csv', delimiter=',', quotechar='"', engine='python')
-scy5ss = pd.read_csv(
-    '../../content/drive/MyDrive/COLAB/ENGR-1110-Project/Causers/global-hunger-index/share-of-children-younger-than-5-who-suffer-from-stunting.csv', delimiter=',')
-
-
-## Take the code from each dataset
-ghi = ghi[ghi['Code'].str.len() == 3].copy()
-scu = scu[scu['Code'].str.len() == 3].copy()
-scwlh = scwlh[scwlh['Code'].str.len() == 3].copy()
-scy5ss = scy5ss[scy5ss['Code'].str.len() == 3].copy()
-
-
-
-
-
-figghi = px.choropleth(
-    ghi,
-    locations="Code",
-    color="Global Hunger Index (2021)",
-    hover_name="Entity",
-    color_continuous_scale="Plasma",
-    locationmode="ISO-3",
-    range_color=(0, ghi['Global Hunger Index (2021)'].max()),
-    hover_data={"Global Hunger Index (2021)": ":,0f" + "Global Hunger Index (2021)",
-                "Code": False},
-    scope="world"
-)
-
-figscu = px.choropleth(
-    scu,
-    locations="Code",
-    color="Prevalence of underweight, weight for age (% of children under 5)",
-    hover_name="Entity",
-    color_continuous_scale="Viridis",
-    locationmode="ISO-3",
-    range_color=(0, scu["Prevalence of underweight, weight for age (% of children under 5)"].max()),
-    hover_data={"Prevalence of underweight, weight for age (% of children under 5)": ":,0f" + "% of Children Affected",
-                "Code": False},
-    scope="world"
-)
-
-figscwlh = px.choropleth(
-    scwlh,
-    locations="Code",
-    color="Prevalence of wasting, weight for height (% of children under 5)",
-    hover_name="Entity",
-    color_continuous_scale="Sunsetdark",
-    locationmode="ISO-3",
-    range_color=(0, scwlh["Prevalence of wasting, weight for height (% of children under 5)"].max()),
-    hover_data={"Prevalence of wasting, weight for height (% of children under 5)": ":,0f" + "% of Children Affected",
-                "Code": False},
-    scope="world"
-)
-
-figscy5ss = px.choropleth(
-    scy5ss,
-    locations="Code",
-    color="Prevalence of stunting, height for age (% of children under 5)",
-    hover_name="Entity",
-    color_continuous_scale="Sunsetdark",
-    locationmode="ISO-3",
-    range_color=(0, scy5ss["Prevalence of stunting, height for age (% of children under 5)"].max()),
-    hover_data={"Prevalence of stunting, height for age (% of children under 5)": ":,0f" + "% of Children Affected",
-                "Code": False},
-    scope="world"
-)
-
-app = Dash(__name__)
-
-# Your existing figures
-figs = {
-    "Global Hunger Index": figghi,
-    "Underweight (% under 5)": figscu,
-    "Wasting (% under 5)": figscwlh,
-    "Stunting (% under 5)": figscy5ss
-}
-
+# -----------------------------
+# Display tabs
+# -----------------------------
 make_tabs(figs)
-
-### PYCHARM DOESNT SUPPORT HTML TABS, THIS WORKS ONLY IN NOTEBOOK ENVIRONMENTS, SUCH AS GOOGLE COLAB.
